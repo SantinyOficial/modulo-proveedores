@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title th:text="${titulo}"></title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Control+2 </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/listar}">Proveedor</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/crear}"> Crear Proveedor</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="container">
+    <h1 class="text-secondary border border-success border-top-0 border-end-0 border-start-0" th:text="${titulo}"></h1>
+    <form th:action="@{/crear}" th:object="${proveedor}" method="post">
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Nombre</label>
+            <div class="col-sm-6">
+                <input type="text" th:field="*{nombreProveedor}" class="form-control"
+                       th:errorclass="'form-control alert-danger'">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('nombreProveedor')}"
+                       th:errors="*{nombreProveedor}"></small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">direccion</label>
+            <div class="col-sm-6"><input type="text" th:field="*{direccionProveedor}" class="form-control"
+                                         th:errorclass="'form-control alert-danger'"></div>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('direccionProveedor')}"
+                   th:errors="*{direccionProveedor}"></small>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">correo</label>
+            <div class="col-sm-6"><input type="email" th:field="*{correoProveedor}" class="form-control"
+                                         th:errorclass="'form-control alert-danger'"></div>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('correoProveedor')}"
+                   th:errors="*{correoProveedor}"></small>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Telefono</label>
+            <div class="col-sm-6"><input type="number" th:field="*{telefonoProveedor}" class="form-control"
+                                         th:errorclass="'form-control alert-danger'"></div>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('telefonoProveedor')}"
+                   th:errors="*{telefonoProveedor}"></small>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">fecha</label>
+            <div class="col-sm-2"><input type="date" class="form-control" th:field="*{fechaRegistro}"
+                                         th:errorclass="'form-control alert-danger'"></div>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaRegistro')}"
+                   th:errors="*{fechaRegistro}"></small>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="col-sm-6"><input type="submit" value="Crear Proveedor" class="btn btn-primary"></div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
