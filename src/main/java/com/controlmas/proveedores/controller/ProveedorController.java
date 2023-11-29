@@ -1,41 +1,58 @@
 package com.controlmas.proveedores.controller;
 
-import com.controlmas.proveedores.models.entity.Proveedores;
-import com.controlmas.proveedores.models.repository.IProveedorRepository;
-import com.controlmas.proveedores.models.service.ProveedorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+import com.controlmas.proveedores.models.entity.Proveedores;
+import com.controlmas.proveedores.service.IProveedorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/controlmas/v2")
 public class ProveedorController {
 
     @Autowired
-    private ProveedorService proveedorService;
+    private IProveedorService proveedorService;
 
-    @GetMapping("/listar")
-    public String listar(Model model){
-        model.addAttribute("titulo", "Listado de Proveedores");
-        model.addAttribute("proveedorList", proveedorService.findAll());
-        return "listar";
+
+    @RequestMapping("/lista/proveedores")
+    public ResponseEntity<List<Proveedores>> listarProveedores(){
+        try{
+            List<Proveedores> proveedores = proveedorService.findAll();
+            if (!proveedores.isEmpty()){
+                return new ResponseEntity<>(proveedores, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @GetMapping("/crear")
-    public String crear(Model model){
-        Proveedores nuevoProveedor = new Proveedores();
-        model.addAttribute("proveedor", nuevoProveedor);
-        model.addAttribute("titulo", "Crear Proveedor");
-        return "form";
+    @GetMapping("/listar/proveedor/{id}")
+    public ResponseEntity<Proveedores> listarPorId(@PathVariable Integer id){
+        try{
+            Proveedores proveedor = proveedorService.getId(id);
+            return new ResponseEntity<>(proveedor, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PostMapping
+    public ResponseEntity<Proveedores> AgregarProveedor(@RequestBody Proveedores proveedor){
+        Proveedores newProveedor = proveedorService.save(proveedor);
+        return new ResponseEntity<>(newProveedor, HttpStatus.OK);
     }
 
-    @PostMapping("/crear")
-    public String crear(@ModelAttribute("proveedor") Proveedores proveedor, Model model){
-        proveedorService.save(proveedor);
-        return "redirect:/listar";
+    @PutMapping
+    public ResponseEntity<Proveedores> updateProveedor(@RequestBody Proveedores proveedor){
+        Proveedores editarProveedor = proveedorService.save(proveedor);
+        return new ResponseEntity<>(editarProveedor, HttpStatus.OK);
     }
+
+
 
 }

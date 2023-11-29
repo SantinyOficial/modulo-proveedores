@@ -1,4 +1,4 @@
-package com.controlmas.proveedores.models.repository;
+package com.controlmas.proveedores.repository;
 
 import com.controlmas.proveedores.models.entity.Proveedores;
 import org.springframework.data.jpa.repository.JpaRepository;
