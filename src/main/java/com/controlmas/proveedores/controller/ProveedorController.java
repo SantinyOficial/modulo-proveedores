@@ -13,10 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/controlmas/v2")
 public class ProveedorController {
-
+    /*Comentario de prueba para realizar un
+        git pull en la segunda rama
+     */
     @Autowired
     private IProveedorService proveedorService;
-
 
     @RequestMapping("/lista/proveedores")
     public ResponseEntity<List<Proveedores>> listarProveedores(){
@@ -52,7 +53,5 @@ public class ProveedorController {
         Proveedores editarProveedor = proveedorService.save(proveedor);
         return new ResponseEntity<>(editarProveedor, HttpStatus.OK);
     }
-
-
 
 }
