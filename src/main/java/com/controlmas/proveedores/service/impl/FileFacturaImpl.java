@@ -29,7 +29,7 @@ public class FileFacturaImpl implements IFileFacturaService {
     @Override
     public void save(List<MultipartFile> files) throws Exception {
         for (MultipartFile multipartFile : files){
-            this.save(files);
+            this.save(multipartFile);
         }
     }
 
