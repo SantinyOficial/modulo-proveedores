@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/controlmas/v2")
+@RequestMapping("/api/v2")
 public class ProveedorController {
     /*Comentario de prueba para realizar un
         git pull en la segunda rama
@@ -19,7 +19,7 @@ public class ProveedorController {
     @Autowired
     private IProveedorService proveedorService;
 
-    @RequestMapping("/lista/proveedores")
+    @GetMapping("/proveedores")
     public ResponseEntity<List<Proveedores>> listarProveedores(){
         try{
             List<Proveedores> proveedores = proveedorService.findAll();
@@ -33,7 +33,7 @@ public class ProveedorController {
         }
     }
 
-    @GetMapping("/listar/proveedor/{id}")
+    @GetMapping("/proveedor/{id}")
     public ResponseEntity<Proveedores> listarPorId(@PathVariable Integer id){
         try{
             Proveedores proveedor = proveedorService.getId(id);
@@ -42,13 +42,13 @@ public class ProveedorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping
+    @PostMapping("/proveedores")
     public ResponseEntity<Proveedores> AgregarProveedor(@RequestBody Proveedores proveedor){
         Proveedores newProveedor = proveedorService.save(proveedor);
         return new ResponseEntity<>(newProveedor, HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/proveedores")
     public ResponseEntity<Proveedores> updateProveedor(@RequestBody Proveedores proveedor){
         Proveedores editarProveedor = proveedorService.save(proveedor);
         return new ResponseEntity<>(editarProveedor, HttpStatus.OK);

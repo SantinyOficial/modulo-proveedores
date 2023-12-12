@@ -17,7 +17,6 @@ public class ProveedorServiceImpl implements IProveedorService {
     @Autowired
     private IProveedorRepository proveedorRepository;
 
-
     @Override
     public List<Proveedores> findAll() {
         return proveedorRepository.findAll();
