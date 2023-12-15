@@ -1,5 +1,6 @@
 package com.controlmas.proveedores.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -46,9 +47,10 @@ public class Proveedores {
     @Column(name = "fecha_registro")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime fechaRegistro;
+    private Date fechaRegistro;
 
-    @OneToMany(mappedBy = "idProveedor",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Facturas> facturas;
 
 }

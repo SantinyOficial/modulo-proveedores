@@ -1,11 +1,11 @@
 package com.controlmas.proveedores.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class Facturas {
     private Integer idFactura;
 
     @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    private Date fechaCreacion;
 
     private Double valor;
 
@@ -32,9 +32,10 @@ public class Facturas {
 
     @ManyToOne
     @JoinColumn(name = "id_prov")
-    private Proveedores idProveedor;
+    private Proveedores proveedor;
 
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Pagos> pagos;
 
 }

@@ -20,36 +20,37 @@ public class ProveedorController {
     private IProveedorService proveedorService;
 
     @GetMapping("/proveedores")
-    public ResponseEntity<List<Proveedores>> listarProveedores(){
-        try{
+    public ResponseEntity<List<Proveedores>> listarProveedores() {
+        try {
             List<Proveedores> proveedores = proveedorService.findAll();
-            if (!proveedores.isEmpty()){
+            if (!proveedores.isEmpty()) {
                 return new ResponseEntity<>(proveedores, HttpStatus.OK);
-            }else{
+            } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/proveedor/{id}")
-    public ResponseEntity<Proveedores> listarPorId(@PathVariable Integer id){
-        try{
+    public ResponseEntity<Proveedores> listarPorId(@PathVariable Integer id) {
+        try {
             Proveedores proveedor = proveedorService.getId(id);
             return new ResponseEntity<>(proveedor, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PostMapping("/proveedores")
-    public ResponseEntity<Proveedores> AgregarProveedor(@RequestBody Proveedores proveedor){
+    public ResponseEntity<Proveedores> AgregarProveedor(@RequestBody Proveedores proveedor) {
         Proveedores newProveedor = proveedorService.save(proveedor);
         return new ResponseEntity<>(newProveedor, HttpStatus.OK);
     }
 
     @PutMapping("/proveedores")
-    public ResponseEntity<Proveedores> updateProveedor(@RequestBody Proveedores proveedor){
+    public ResponseEntity<Proveedores> updateProveedor(@RequestBody Proveedores proveedor) {
         Proveedores editarProveedor = proveedorService.save(proveedor);
         return new ResponseEntity<>(editarProveedor, HttpStatus.OK);
     }
