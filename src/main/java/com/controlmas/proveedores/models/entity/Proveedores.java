@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -44,6 +46,9 @@ public class Proveedores {
     @Column(name = "fecha_registro")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
+
+    @OneToMany(mappedBy = "idProveedor",cascade = CascadeType.ALL)
+    private List<Facturas> facturas;
 
 }

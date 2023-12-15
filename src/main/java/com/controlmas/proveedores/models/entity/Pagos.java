@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="pagos")
@@ -19,7 +19,7 @@ public class Pagos {
     private Integer idPago;
 
     @Column(name="fecha_pago")
-    private Date fechaPago;
+    private LocalDateTime fechaPago;
 
     @Column(name = "valor_pagado")
     private Integer valor;
@@ -27,6 +27,8 @@ public class Pagos {
     @Column(name = "factura_estado")
     private Integer facturaEstado;
 
-
+    @ManyToOne
+    @JoinColumn(name = "factura_id")
+    private Facturas factura;
 
 }

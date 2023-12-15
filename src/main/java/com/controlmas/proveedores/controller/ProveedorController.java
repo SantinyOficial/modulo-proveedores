@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping("/api")
 public class ProveedorController {
     /*Comentario de prueba para realizar un
         git pull en la segunda rama
