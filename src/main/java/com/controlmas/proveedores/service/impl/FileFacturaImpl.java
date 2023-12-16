@@ -2,6 +2,7 @@ package com.controlmas.proveedores.service.impl;
 
 import com.controlmas.proveedores.service.IFileFacturaService;
 import jakarta.annotation.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,9 @@ public class FileFacturaImpl implements IFileFacturaService {
 
     @Override
     public Resource load(String name) throws Exception {
-        return null;
+        Path file = rootFolder.resolve(name);
+        Resource resource = (Resource) new UrlResource(file.toUri());
+        return resource;
     }
 
     @Override
@@ -35,6 +38,8 @@ public class FileFacturaImpl implements IFileFacturaService {
 
     @Override
     public Stream<Path> loadAll() throws Exception {
-        return null;
+        return Files.walk(rootFolder, 1)
+                .filter(path -> !path.equals(rootFolder))
+                .map(rootFolder::relativize);
     }
 }
