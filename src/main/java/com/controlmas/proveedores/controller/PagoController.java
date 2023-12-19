@@ -21,7 +21,6 @@ public class PagoController {
     public ResponseEntity<?> registrarPago(@RequestBody Pagos pagos) {
         try {
             pagos.setAplicado(false);
-            pagos.setFacturaEstado(1);
             Pagos newPagos = pagoService.save(pagos);
             return new ResponseEntity<>(newPagos, HttpStatus.OK);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.controlmas.proveedores.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,32 +26,36 @@ public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_prov")
-    private Integer id;
+    private Integer idProveedor;
 
     @NotEmpty
-    @Column(name = "nombre_prov")
+    @Column(name = "nombre_pr")
     private String nombreProveedor;
 
     @NotEmpty
-    @Column(name = "direccion_prov")
+    @Column(name = "direccion_pr")
     private String direccionProveedor;
 
     @NotEmpty
-    @Column(name = "correo_prov")
+    @Column(name = "correo_pr")
     private String correoProveedor;
 
     @NotEmpty
-    @Column(name = "telefono_prov")
+    @Column(name = "telefono_pr")
     private Long telefonoProveedor;
 
-    @NotNull
-    @Column(name = "fecha_registro")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fechaRegistro;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date fechaCreacion;
 
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Facturas> facturas;
+
+    @PrePersist
+    public void prePersist() {
+        this.fechaCreacion = new Date();
+    }
 
 }

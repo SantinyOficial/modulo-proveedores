@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 @ControllerAdvice
 public class FileUploadExceptionAdvice {
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
+   /* @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<Response> handleMaxSizeException(MaxUploadSizeExceededException ex){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Tamaño maximo excedido"));
     }
@@ -18,8 +18,5 @@ public class FileUploadExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleException(Exception ex){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Tamaño maximo excedido"));
-    }
-
-
-
+    }*/
 }

@@ -1,10 +1,12 @@
 package com.controlmas.proveedores.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,20 +20,36 @@ public class Pagos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPago;
 
-    @Column(name = "fecha_pago")
-    private Date fechaPago;
+    @Column(name = "id_usuario")
+    private int idUsuario;
 
-    @Column(name = "valor_pagado")
-    private Double valor;
+    @ManyToOne
+    @JoinColumn(name = "id_factura")
+    private Facturas factura;
 
-    @Column(name = "factura_estado")
-    private Integer facturaEstado;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_estado")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime fechaEstado;
+
+    @Column(name = "valor_pago")
+    private Double valorPago;
 
     @Column(name = "aplicado")
     private boolean aplicado;
 
-    @ManyToOne
-    @JoinColumn(name = "factura_id")
-    private Facturas factura;
+    @PreUpdate
+    public void preUpdate() {
+        this.fechaEstado = LocalDateTime.now();
+    }
 
+    @PrePersist
+    public void prePersist() {
+        this.fechaCreacion = new Date();
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,10 +75,18 @@ public class FacturaController {
         }
     }
 
-    @PostMapping("/facturas/{idFactura}/pagos/{idPago}/restar")
-    public ResponseEntity<?> restarPago(@PathVariable Integer idFactura, @PathVariable Integer idPago) {
-        facturaService.restarPagos(idFactura, idPago);
-        return ResponseEntity.ok("Pago restado con exito");
-    }
+    @PostMapping("/facturas/{idFactura}/pagos/{idPago}")
+    public ResponseEntity<?> agregaPago(@PathVariable Integer idFactura, @PathVariable Integer idPago) {
+        try {
+            facturaService.agregarPago(idFactura, idPago);
+            return ResponseEntity.ok("Pago restado con éxito");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La factura o el pago no fueron encontrados");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El pago ya ha sido aplicado anteriormente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
+        }
 
+    }
 }

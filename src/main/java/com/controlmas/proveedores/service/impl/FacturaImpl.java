@@ -5,7 +5,6 @@ import com.controlmas.proveedores.models.entity.Pagos;
 import com.controlmas.proveedores.repository.IFacturaRepository;
 import com.controlmas.proveedores.repository.IPagoRepository;
 import com.controlmas.proveedores.service.IFacturaService;
-import com.controlmas.proveedores.service.IPagoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class FacturaImpl implements IFacturaService {
 
     @Override
     public Optional<Facturas> finById(Integer id) {
-        return facturaRepository.findById(id);
+        return Optional.ofNullable(facturaRepository.findById(id).orElse(null));
     }
 
     @Override
@@ -32,8 +31,13 @@ public class FacturaImpl implements IFacturaService {
         if (factura.getIdFactura() == null) {
             factura.setEstado((short) 1);
         }
+        Double saldoFactura = factura.getValorFactura();
+        factura.setSaldoFactura(saldoFactura) ;
+        factura.setValorPago(0.00);
         return facturaRepository.save(factura);
+
     }
+
 
     @Override
     public List<Facturas> findAll() {
@@ -41,7 +45,7 @@ public class FacturaImpl implements IFacturaService {
     }
 
     @Override
-    public void restarPagos(Integer idFactura, Integer idPago) {
+    public void agregarPago(Integer idFactura, Integer idPago) {
         Facturas factura = facturaRepository.findById(idFactura).orElseThrow(
                 () -> new EntityNotFoundException("No se encontró la factura")
         );
@@ -52,8 +56,12 @@ public class FacturaImpl implements IFacturaService {
         if (pago.isAplicado())
             throw new IllegalStateException("el pago ya ha sido aplicado anteriormente");
 
-        double nuevoValor = factura.getValor() - pago.getValor();
-        factura.setValor(nuevoValor);
+
+        double nuevoValor = factura.getValorPago() + pago.getValorPago();
+        factura.setValorPago(nuevoValor);
+
+        double saldoParcial = factura.getSaldoFactura() - pago.getValorPago();
+        factura.setSaldoFactura(saldoParcial);
 
         pago.setAplicado(true);
         actualizarEstado(factura);
@@ -62,12 +70,15 @@ public class FacturaImpl implements IFacturaService {
     }
 
     public static void actualizarEstado(Facturas factura){
-        if (factura.getValor() == 0) {
+        if (factura.getSaldoFactura() == 0) {
             factura.setEstado((short) 3);
-        } else if (factura.getValor() > 0) {
+            factura.setEstadoStr("pagada");
+        } else if (factura.getSaldoFactura() > 0) {
             factura.setEstado((short) 2);
+            factura.setEstadoStr("deuda parcial");
         } else {
             factura.setEstado((short) 1);
+            factura.setEstadoStr("no pagada");
         }
     }
 

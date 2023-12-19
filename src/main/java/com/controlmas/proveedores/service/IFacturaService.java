@@ -1,7 +1,7 @@
 package com.controlmas.proveedores.service;
 
 import com.controlmas.proveedores.models.entity.Facturas;
-import com.controlmas.proveedores.models.entity.Pagos;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,6 @@ public interface IFacturaService {
 
     List<Facturas> findAll();
 
-    void restarPagos(Integer idFactura, Integer idPago);
-
+    void agregarPago(Integer idFactura, Integer idPago);
 
 }
