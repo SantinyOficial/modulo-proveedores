@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Entity
-@Table(name="pagos")
+@Table(name = "pagos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,14 +18,17 @@ public class Pagos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPago;
 
-    @Column(name="fecha_pago")
+    @Column(name = "fecha_pago")
     private Date fechaPago;
 
     @Column(name = "valor_pagado")
-    private Integer valor;
+    private Double valor;
 
     @Column(name = "factura_estado")
     private Integer facturaEstado;
+
+    @Column(name = "aplicado")
+    private boolean aplicado;
 
     @ManyToOne
     @JoinColumn(name = "factura_id")

@@ -13,9 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ProveedorController {
-    /*Comentario de prueba para realizar un
-        git pull en la segunda rama
-     */
+
     @Autowired
     private IProveedorService proveedorService;
 
@@ -26,7 +24,7 @@ public class ProveedorController {
             if (!proveedores.isEmpty()) {
                 return new ResponseEntity<>(proveedores, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

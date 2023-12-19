@@ -74,5 +74,10 @@ public class FacturaController {
         }
     }
 
+    @PostMapping("/facturas/{idFactura}/pagos/{idPago}/restar")
+    public ResponseEntity<?> restarPago(@PathVariable Integer idFactura, @PathVariable Integer idPago) {
+        facturaService.restarPagos(idFactura, idPago);
+        return ResponseEntity.ok("Pago restado con exito");
+    }
 
 }
