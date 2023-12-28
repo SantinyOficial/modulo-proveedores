@@ -62,6 +62,10 @@ public class Facturas {
     @JsonIgnore
     private List<Pagos> pagos;
 
+    public Facturas(Integer idFactura){
+        this.idFactura = idFactura;
+    }
+
     @PreUpdate
     public void preUpdate() {
         this.fechaEstado = LocalDateTime.now();
@@ -71,5 +75,7 @@ public class Facturas {
     public void prePersist() {
         this.fechaCreacion = new Date();
     }
+
+
 
 }

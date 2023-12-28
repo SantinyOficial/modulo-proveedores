@@ -43,6 +43,10 @@ public class Pagos {
     @Column(name = "aplicado")
     private boolean aplicado;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_documento_soporte")
+    private DocumentoSoporte documentoSoporte;
+
     @PreUpdate
     public void preUpdate() {
         this.fechaEstado = LocalDateTime.now();

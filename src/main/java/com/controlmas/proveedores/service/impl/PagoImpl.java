@@ -5,6 +5,7 @@ import com.controlmas.proveedores.repository.IPagoRepository;
 import com.controlmas.proveedores.service.IPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,8 @@ public class PagoImpl implements IPagoService {
     @Autowired
     IPagoRepository pagoRepository;
 
-
     @Override
-    public Pagos save(Pagos pago) {
+    public Pagos save(Pagos pago, MultipartFile file) {
         return pagoRepository.save(pago);
     }
 
